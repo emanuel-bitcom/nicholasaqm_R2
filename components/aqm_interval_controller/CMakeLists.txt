@@ -1,0 +1,1 @@
+idf_component_register(SRCS "aqm_interval.c" INCLUDE_DIRS include REQUIRES "aqm_global_data" "aqm_nvs_rw")

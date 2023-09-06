@@ -1,0 +1,1 @@
+idf_component_register(SRCS "hdc3022.c" "aqm_i2c_temp.c" "hdc2021.c" INCLUDE_DIRS include REQUIRES "i2c_common" "nvs_flash" "aqm_nvs_rw")

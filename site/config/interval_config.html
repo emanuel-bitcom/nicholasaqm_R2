@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>NicholasAQM</title>
+    <link rel="icon" type="image/x-icon" href="../pictures/bitcom_logo.svg">
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+
+    <h2>Interval Configuration</h2>
+
+    <div class="center-form">
+        <form action="/api/interval_config" method="post">
+            <div class="form-field-center">
+                <div class="form-text">
+                    <label for="interval">Measuring interval(min):</label><br>
+                </div>
+                <input class="form-field" type="number" id="interval" name="interval"><br>
+                <div class="form-text">
+                    <label for="repetitions">Repetitions on each measurement:</label><br>
+                </div>
+                
+                <input class="form-field" type="number" id="repetitions" name="repetitions"><br>
+            </div>
+            <div class="center-button">
+                <input class="aqm-button" type="submit" value="Save">
+            </div>
+
+        </form>
+    </div>
+
+    <div class="center-small-buttons">
+        <input class="aqm-small-button" type="button" onclick="window.open('mqtt_config.html', '_self')" value="Next">
+    </div>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,5 @@
+{
+ERROR: trash on serial
+SOLUTION: verify commands to have \r\n
+          use strlen instead of sizeof
+}

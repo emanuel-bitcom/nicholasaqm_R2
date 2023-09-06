@@ -1,0 +1,1 @@
+idf_component_register(SRCS "ads1115.c" "aqm_i2c_toxic.c" INCLUDE_DIRS include REQUIRES "driver" "i2c_common" "nvs_flash" "aqm_nvs_rw")

@@ -1,0 +1,1 @@
+idf_component_register(SRCS "aqm_eth_controller.c" INCLUDE_DIRS include REQUIRES "nvs_flash" "aqm_global_data" "driver" "eth_enc28j60" "esp_netif" "esp_eth" "mqtt" "aqm_lte_controller" "aqm_nvs_rw")

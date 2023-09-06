@@ -1,0 +1,1 @@
+idf_component_register(SRCS "aqm_SD_hw_reset.c" "aqm_SD_controller.c" INCLUDE_DIRS include REQUIRES "aqm_global_data" "cjson" "driver" "fatfs" "aqm_nvs_rw")

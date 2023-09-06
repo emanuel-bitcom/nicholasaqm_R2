@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>NicholasAQM</title>
+    <link rel="icon" type="image/x-icon" href="../pictures/bitcom_logo.svg">
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+
+    <h2>LoraWan Configuration</h2>
+
+    <div class="center-form">
+        <form action="/api/lorawan_config" method="post">
+            <div class="form-field-center">
+                <div class="form-text">
+                    <label for="deveui">DevEUI:</label><br>
+                </div>
+                <input class="form-field txt-smaller" type="text" id="deveui" name="deveui"
+                    value="88 77 66 55 44 33 22 11" readonly><br>
+                <div class="form-text">
+                    <label for="appeui">AppEUI:</label><br>
+                </div>
+
+                <input class="form-field txt-smaller" type="text" id="appeui" name="appeui"><br>
+                <div class="form-text">
+                    <label for="appkey">AppKEY:</label><br>
+                </div>
+                <input class="form-field txt-smaller" type="text" id="appkey" name="appkey"><br>
+            </div>
+
+            <div class="center-button">
+                <input class="aqm-button" type="submit" value="Save">
+            </div>
+        </form>
+    </div>
+
+
+    <div class="center-small-buttons">
+        <input class="aqm-small-button" type="button" onclick="window.open('lte_config.html', '_self')" value="Back">
+        
+    </div>
+
+    <div class="center-form">
+        <form action="/api/finish_config" method="post">
+            <div class="center-button">
+                <input class="aqm-button" type="submit" value="Finish">
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>

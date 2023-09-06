@@ -1,0 +1,1 @@
+idf_component_register(SRCS "aqm_nvs_high.c" "aqm_nvs_rw.c" INCLUDE_DIRS include REQUIRES "nvs_flash" "aqm_global_data")

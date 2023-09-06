@@ -1,0 +1,100 @@
+body {
+    background-color: rgba(189, 117, 189, 0.39);
+    
+}
+
+.center {
+    margin:auto;
+    width: 50%;
+    padding:5%;
+}
+
+.center-button {
+    margin:auto;
+    width: 110pt;
+    height: 82pt;
+}
+
+.center-small-buttons {
+    margin:auto;
+    width:300pt;
+    height:70pt;
+}
+
+.aqm-button {
+    margin-top:10pt;
+    margin-bottom: 10pt;
+    width:110pt;
+    height: 62pt;
+    border-color: white;
+    border-radius: 5pt;
+    border-style: solid;
+    background-color:rgb(175, 116, 177);
+    color: white;
+    font-size: xx-large;
+    text-align: center;
+}
+
+.aqm-small-button {
+    margin-left: 24pt;
+    margin-right: 24pt;
+    margin-top:10pt;
+    margin-bottom: 10pt;
+    width:100pt;
+    height: 42pt;
+    border-color: white;
+    border-radius: 5pt;
+    border-style: solid;
+    background-color:rgb(175, 116, 177);
+    color: white;
+    font-size: large;
+}
+
+.center-form {
+    margin: auto;
+    width: 250pt;
+}
+
+form {
+    width: 250pt;
+}
+
+.form-field {
+    margin-left: auto;
+    margin-right: auto;
+    width:214pt;
+    height: 62pt;
+    border-color: white;
+    border-radius: 5pt;
+    border-style: solid;
+    background-color:rgba(83, 80, 83, 0.212);
+    color: white;
+    font-size: xx-large;
+    text-align: center;
+}
+
+.form-text {
+    margin-left: auto;
+    margin-right: auto;
+    width:200pt;
+    text-align: center;
+    color: white;
+    font-size: xx-large;
+}
+
+.form-field-center {
+    width: 220pt;
+    margin:auto;
+}
+
+h2 {
+    margin: auto;
+    text-align: center;
+    padding-bottom: 10pt;
+    color: white;
+    font-size: xx-large;
+}
+
+.txt-smaller{
+    font-size: large;
+}

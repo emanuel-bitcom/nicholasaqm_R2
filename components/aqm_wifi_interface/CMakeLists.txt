@@ -1,0 +1,2 @@
+idf_component_register(SRCS "aqm_wifi_interface.c" "connect.c" INCLUDE_DIRS include REQUIRES "nvs_flash" "cjson" "esp_http_server" "mdns" "spiffs" "esp_netif" "esp_wifi"
+                        "driver" "aqm_global_data" "aqm_nvs_rw")

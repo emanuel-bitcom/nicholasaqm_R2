@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>NicholasAQM</title>
+    <link rel="icon" type="image/x-icon" href="../pictures/bitcom_logo.svg">
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+
+    <h2>MQTT Configuration</h2>
+
+    <div class="center-form">
+        <form action="/api/mqtt_config" method="post">
+            <div class="form-field-center">
+                <div class="form-text">
+                    <label for="url">URL:</label><br>
+                </div>
+                <input class="form-field" type="text" id="url" name="url"><br>
+                <div class="form-text">
+                    <label for="port">Port:</label><br>
+                </div>
+                <input class="form-field" type="number" id="port" name="port"><br>
+                <div class="form-text">
+                    <label for="user">User:</label><br>
+                </div>
+                <input class="form-field" type="text" id="user" name="user"><br>
+                <div class="form-text">
+                    <label for="pwd">Password:</label><br>
+                </div>
+                <input class="form-field" type="text" id="pwd" name="pwd"><br>
+            </div>
+            <div class="center-button">
+                <input class="aqm-button" type="submit" value="Save">
+            </div>
+            
+        </form>
+    </div>
+
+    <div class="center-small-buttons">
+        <input class="aqm-small-button" type="button" onclick="window.open('interval_config.html', '_self')" value="Back">
+        <input class="aqm-small-button" type="button" onclick="window.open('lte_config.html', '_self')" value="Next">
+    </div>
+    
+
+
+</body>
+
+</html>
