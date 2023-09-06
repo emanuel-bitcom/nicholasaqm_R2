@@ -517,7 +517,7 @@ void upload_certificate()
   extern const unsigned char certEnd[] asm("_binary_cert4_cer_end");
 
   // check if it exists
-  if (certStart == NULL || certEnd == NULL || ((certEnd - certStart) == 0))
+  if (((certEnd - certStart) == 0))
   {
     ESP_LOGE(TAG1, "HTTPS certificate not found, cannot continue");
     return;
