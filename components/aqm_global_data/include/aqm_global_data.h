@@ -85,7 +85,7 @@ typedef struct toxic_data_struct{
     ulong O3_A;
 }toxic_data;
 
-//temp and humid placed toghether
+//temp and humid placed together
 typedef struct temp_data_struct{
 	double temp_env;
   double temp_sta;
