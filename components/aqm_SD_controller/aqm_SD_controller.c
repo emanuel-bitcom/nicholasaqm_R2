@@ -73,31 +73,53 @@ esp_err_t load_calib_data_to_nvs(){
     }
     read_file_json("/store/calib/tox_mV.json", &p_SD_calib);
     if(p_SD_calib){
-        SD_calib.NO2_cal.WEe=cJSON_GetObjectItem(p_SD_calib, "NO2_WEe")->valueint;
-        SD_calib.NO2_cal.AEe=cJSON_GetObjectItem(p_SD_calib, "NO2_AEe")->valueint;
-        SD_calib.NO2_cal.AE0=cJSON_GetObjectItem(p_SD_calib, "NO2_A0")->valueint;
-        SD_calib.NO2_cal.WE0=cJSON_GetObjectItem(p_SD_calib, "NO2_W0")->valueint;
-        SD_calib.NO2_cal.sensit=cJSON_GetObjectItem(p_SD_calib, "NO2_S")->valueint;
+        char sub_key[15];
+        for(uint8_t i=1; i<=4;i++){
+            /*sensor type*/
+            memset(SD_calib.SEN_cal[i].type, 0, 5);
+            memset(sub_key,0,15);
+            sprintf(sub_key,"SEN%d_t",i);
+            strcpy(SD_calib.SEN_cal[i].type, cJSON_GetObjectItem(p_SD_calib,(const char*)sub_key)->valuestring); 
 
-        SD_calib.SO2_cal.WEe=cJSON_GetObjectItem(p_SD_calib, "SO2_WEe")->valueint;
-        SD_calib.SO2_cal.AEe=cJSON_GetObjectItem(p_SD_calib, "SO2_AEe")->valueint;
-        SD_calib.SO2_cal.AE0=cJSON_GetObjectItem(p_SD_calib, "SO2_A0")->valueint;
-        SD_calib.SO2_cal.WE0=cJSON_GetObjectItem(p_SD_calib, "SO2_W0")->valueint;
-        SD_calib.SO2_cal.sensit=cJSON_GetObjectItem(p_SD_calib, "SO2_S")->valueint;
+            /*sensor WEe*/
+            memset(sub_key,0,15);
+            sprintf(sub_key,"SEN%d_WEe",i);
+            SD_calib.SEN_cal[i].WEe=cJSON_GetObjectItem(p_SD_calib, (const char*)sub_key)->valueint;
 
-        SD_calib.CO_cal.WEe=cJSON_GetObjectItem(p_SD_calib, "CO_WEe")->valueint;
-        SD_calib.CO_cal.AEe=cJSON_GetObjectItem(p_SD_calib, "CO_AEe")->valueint;
-        SD_calib.CO_cal.AE0=cJSON_GetObjectItem(p_SD_calib, "CO_A0")->valueint;
-        SD_calib.CO_cal.WE0=cJSON_GetObjectItem(p_SD_calib, "CO_W0")->valueint;
-        SD_calib.CO_cal.sensit=cJSON_GetObjectItem(p_SD_calib, "CO_S")->valueint;
+            /*sensor AEe*/
+            memset(sub_key,0,15);
+            sprintf(sub_key,"SEN%d_AEe",i);
+            SD_calib.SEN_cal[i].AEe=cJSON_GetObjectItem(p_SD_calib, (const char*)sub_key)->valueint;
 
-        SD_calib.O3_cal.WEe=cJSON_GetObjectItem(p_SD_calib, "O3_WEe")->valueint;
-        SD_calib.O3_cal.AEe=cJSON_GetObjectItem(p_SD_calib, "O3_AEe")->valueint;
-        SD_calib.O3_cal.AE0=cJSON_GetObjectItem(p_SD_calib, "O3_A0")->valueint;
-        SD_calib.O3_cal.WE0=cJSON_GetObjectItem(p_SD_calib, "O3_W0")->valueint;
-        SD_calib.O3_cal.sensit=cJSON_GetObjectItem(p_SD_calib, "O3_S")->valueint;
-        SD_calib.O3_cal.NO2_sensit=cJSON_GetObjectItem(p_SD_calib, "O3_S2")->valueint;
-        SD_calib.O3_cal.gain=cJSON_GetObjectItem(p_SD_calib, "O3_G")->valuedouble;
+            /*sensor A0*/
+            memset(sub_key,0,15);
+            sprintf(sub_key,"SEN%d_A0",i);
+            SD_calib.SEN_cal[i].AE0=cJSON_GetObjectItem(p_SD_calib, (const char*)sub_key)->valueint;
+
+            /*sensor W0*/
+            memset(sub_key,0,15);
+            sprintf(sub_key,"SEN%d_W0",i);
+            SD_calib.SEN_cal[i].WE0=cJSON_GetObjectItem(p_SD_calib, (const char*)sub_key)->valueint;
+
+            /*sensor sensit 1*/
+            memset(sub_key,0,15);
+            sprintf(sub_key,"SEN%d_S",i);
+            SD_calib.SEN_cal[i].sensit=cJSON_GetObjectItem(p_SD_calib, (const char*)sub_key)->valueint;
+
+            /*sensor sensit2*/
+            /*aka NO2 sensit*/
+            memset(sub_key,0,15);
+            sprintf(sub_key,"SEN%d_S2",i);
+            SD_calib.SEN_cal[i].NO2_sensit=cJSON_GetObjectItem(p_SD_calib, (const char*)sub_key)->valueint;
+
+            /*sensor gain*/
+            /*it is a double value*/
+            memset(sub_key,0,15);
+            sprintf(sub_key,"SEN%d_G",i);
+            SD_calib.SEN_cal[i].gain=cJSON_GetObjectItem(p_SD_calib,(const char*)sub_key)->valuedouble;
+
+        }
+
         free(p_SD_calib);
         ESP_LOGI(TAG, "Loaded calib mV data");
     }

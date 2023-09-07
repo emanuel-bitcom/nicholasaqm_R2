@@ -36,10 +36,10 @@ void load_test_sta_cal(){
 
     station_cal test_station_cal;
 
-    test_station_cal.CO_cal=test_CO_cal;
-    test_station_cal.SO2_cal=test_SO2_cal;
-    test_station_cal.NO2_cal=test_NO2_cal;
-    test_station_cal.O3_cal=test_O3_cal;
+    test_station_cal.SEN_cal[3]=test_CO_cal;
+    test_station_cal.SEN_cal[2]=test_SO2_cal;
+    test_station_cal.SEN_cal[1]=test_NO2_cal;
+    test_station_cal.SEN_cal[4]=test_O3_cal;
 
     test_station_cal.station_SN=1;
     test_station_cal.pos_latitude=44.425511;

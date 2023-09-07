@@ -70,8 +70,8 @@ int start_toxic_svc()
 void toxic_fun(void *arg)
 {
   //variables to read data into
-  unsigned long int CO_W_sum=0, SO2_W_sum=0, NO2_W_sum=0, O3_W_sum=0;
-  unsigned long int CO_A_sum=0, SO2_A_sum=0, NO2_A_sum=0, O3_A_sum=0;
+  unsigned long int SEN3_W_sum=0, SEN2_W_sum=0, SEN1_W_sum=0, SEN4_W_sum=0;
+  unsigned long int SEN3_A_sum=0, SEN2_A_sum=0, SEN1_A_sum=0, SEN4_A_sum=0;
   uint toxic_meas_delay=n_toxic_time/n_toxic_values;
 
   	while(true){
@@ -79,54 +79,54 @@ void toxic_fun(void *arg)
     xEventGroupWaitBits(data_sent_evt_grp,toxic_flag, true, true, portMAX_DELAY);
 
     //variables to read data into
-  CO_W_sum=0; SO2_W_sum=0; NO2_W_sum=0; O3_W_sum=0;
-  CO_A_sum=0; SO2_A_sum=0; NO2_A_sum=0; O3_A_sum=0;
+  SEN3_W_sum=0; SEN2_W_sum=0; SEN1_W_sum=0; SEN4_W_sum=0;
+  SEN3_A_sum=0; SEN2_A_sum=0; SEN1_A_sum=0; SEN4_A_sum=0;
 
   for(int index=0; index<n_toxic_values; index++)
         {
           int16_t result_vect[4];
         
-        //NO2 and SO2 data
+        //SEN1 and SEN2 data
         get_conversion(1, result_vect);
         
-        NO2_W_sum+=result_vect[1];
-        NO2_A_sum+=result_vect[0];
-        SO2_W_sum+=result_vect[3];
-        SO2_A_sum+=result_vect[2];
+        SEN1_W_sum+=result_vect[1];
+        SEN1_A_sum+=result_vect[0];
+        SEN2_W_sum+=result_vect[3];
+        SEN2_A_sum+=result_vect[2];
 
         get_conversion(2, result_vect);
-        CO_W_sum+=result_vect[1];
-        CO_A_sum+=result_vect[0];
-        O3_W_sum+=result_vect[3];
-        O3_A_sum+=result_vect[2];
+        SEN3_W_sum+=result_vect[1];
+        SEN3_A_sum+=result_vect[0];
+        SEN4_W_sum+=result_vect[3];
+        SEN4_A_sum+=result_vect[2];
 
         vTaskDelay(toxic_meas_delay/portTICK_PERIOD_MS);
 
         }
   
    //we average the values according to a certain function
-    CO_W_sum/=n_toxic_values;
-    SO2_W_sum/=n_toxic_values;
-    NO2_W_sum/=n_toxic_values;
-    O3_W_sum/=n_toxic_values;
+    SEN3_W_sum/=n_toxic_values;
+    SEN2_W_sum/=n_toxic_values;
+    SEN1_W_sum/=n_toxic_values;
+    SEN4_W_sum/=n_toxic_values;
 
-    CO_A_sum/=n_toxic_values;
-    SO2_A_sum/=n_toxic_values;
-    NO2_A_sum/=n_toxic_values;
-    O3_A_sum/=n_toxic_values;
+    SEN3_A_sum/=n_toxic_values;
+    SEN2_A_sum/=n_toxic_values;
+    SEN1_A_sum/=n_toxic_values;
+    SEN4_A_sum/=n_toxic_values;
 
 	//put read data in structure
 	toxic_data current_toxic;
 
-	current_toxic.CO_W=CO_W_sum;
-  current_toxic.SO2_W=SO2_W_sum;
-  current_toxic.NO2_W=NO2_W_sum;
-  current_toxic.O3_W=O3_W_sum;
+	current_toxic.SEN3_W=SEN3_W_sum;
+  current_toxic.SEN2_W=SEN2_W_sum;
+  current_toxic.SEN1_W=SEN1_W_sum;
+  current_toxic.SEN4_W=SEN4_W_sum;
 
-  current_toxic.CO_A=CO_A_sum;
-  current_toxic.SO2_A=SO2_A_sum;
-  current_toxic.NO2_A=NO2_A_sum;
-  current_toxic.O3_A=O3_A_sum;
+  current_toxic.SEN3_A=SEN3_A_sum;
+  current_toxic.SEN2_A=SEN2_A_sum;
+  current_toxic.SEN1_A=SEN1_A_sum;
+  current_toxic.SEN4_A=SEN4_A_sum;
 	
 
   //we write the obtained values in temp_nvs
@@ -165,7 +165,7 @@ void toxic_fun(void *arg)
     /**
      * Debug section
     */
-    ESP_LOGI(TAG_TOXIC, "Written data: working: CO=%ld SO2=%ld NO2=%ld O3=%ld",current_toxic.CO_W, current_toxic.SO2_W, current_toxic.NO2_W, current_toxic.O3_W);
+    ESP_LOGI(TAG_TOXIC, "Written data: working: SEN3=%ld SEN2=%ld SEN1=%ld SEN4=%ld",current_toxic.SEN3_W, current_toxic.SEN2_W, current_toxic.SEN1_W, current_toxic.SEN4_W);
 
 		xSemaphoreGive(sensors_data_m);
 		}
@@ -210,7 +210,7 @@ void get_conversion(uint8_t ads_num, int16_t result[]){
     conversion_intermediate=conversion_result*FS_mV/32768;
     result[0] = conversion_intermediate;
 
-    // Request single ended on pin AIN0
+    // Request single ended on pin AIN1
     ADS1115_request_single_ended_AIN1(); // all functions except for get_conversion_X return 'esp_err_t' for logging
 
     // Check conversion state - returns true if conversion is complete
@@ -222,7 +222,7 @@ void get_conversion(uint8_t ads_num, int16_t result[]){
     conversion_intermediate=conversion_result*FS_mV/32768;
     result[1] = conversion_intermediate;
 
-    // Request single ended on pin AIN0
+    // Request single ended on pin AIN2
     ADS1115_request_single_ended_AIN2(); // all functions except for get_conversion_X return 'esp_err_t' for logging
 
     // Check conversion state - returns true if conversion is complete
@@ -234,7 +234,7 @@ void get_conversion(uint8_t ads_num, int16_t result[]){
     conversion_intermediate=conversion_result*FS_mV/32768;
     result[2] = conversion_intermediate;
 
-    // Request single ended on pin AIN0
+    // Request single ended on pin AIN3
     ADS1115_request_single_ended_AIN3(); // all functions except for get_conversion_X return 'esp_err_t' for logging
 
     // Check conversion state - returns true if conversion is complete

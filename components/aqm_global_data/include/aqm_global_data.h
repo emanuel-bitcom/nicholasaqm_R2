@@ -24,6 +24,8 @@
 #define N_INTERVAL 5 //default interval (in min) between readings
 #define WIFI_TIMEOUT 3 //default wifi timeout (int min) 
 
+#define TOXIC_SENSORS_N 4
+
 /*Global TCP/IP related flags*/
 extern _Bool is_netif_init;
 extern _Bool is_eventloop_init;
@@ -74,15 +76,15 @@ extern EventGroupHandle_t comm_available_evt_grp;
 //***********************************************************************
 
 typedef struct toxic_data_struct{
-	  ulong CO_W;
-    ulong SO2_W;
-    ulong NO2_W;
-    ulong O3_W;
+	  unsigned long SEN1_W;
+    unsigned long SEN2_W;
+    unsigned long SEN3_W;
+    unsigned long SEN4_W;
 
-    ulong CO_A;
-    ulong SO2_A;
-    ulong NO2_A;
-    ulong O3_A;
+    unsigned long SEN1_A;
+    unsigned long SEN2_A;
+    unsigned long SEN3_A;
+    unsigned long SEN4_A;
 }toxic_data;
 
 //temp and humid placed together
@@ -106,6 +108,7 @@ typedef struct opc_data_struct{
 //sensors calibration data structures
 
 typedef struct sensor_cal_struct{
+  char type[5];
   uint16_t WE0;
   uint16_t WEe;
   uint16_t AE0;
@@ -123,10 +126,8 @@ typedef struct station_cal_struct{
   float pos_latitude;
   float pos_longitude;
 
-  sensor_cal CO_cal;
-  sensor_cal SO2_cal;
-  sensor_cal NO2_cal;
-  sensor_cal O3_cal;
+  //first position is empty as sensors number begin with 1 
+  sensor_cal SEN_cal[TOXIC_SENSORS_N+1];
 
 }station_cal;
 

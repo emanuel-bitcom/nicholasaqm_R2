@@ -1,6 +1,10 @@
 {
   "C_Cpp.intelliSenseEngine": "default",
   "files.associations": {
-    "aqm_lte_controller.h": "c"
-  }
+    "aqm_lte_controller.h": "c",
+    "aqm_sd_controller.h": "c",
+    "aqm_global_data.h": "c",
+    "test_module.h": "c"
+  },
+  "idf.adapterTargetName": "esp32"
 }

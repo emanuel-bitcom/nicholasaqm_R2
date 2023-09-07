@@ -1,0 +1,74 @@
+{
+    "SN":1,
+    "is_new_data":1,
+    "data":{
+        "temp":{
+            "env":24.5,
+            "sta":40.5
+        },
+        "humid":{
+            "env":45,
+            "sta":55
+        },
+        "pm":{
+            "pmA":5,
+            "pmB":10,
+            "pmC":50
+        },
+        "tox_mV":{
+            "SEN1_W":400,
+            "SEN2_W":400,
+            "SEN3_W":400,
+            "SEN4_W":400,
+            "SEN1_A":200,
+            "SEN2_A":200,
+            "SEN3_A":200,
+            "SEN4_A":200
+        }       
+    },
+    "calib":{
+        "tox_mV":{
+            "SEN1_t" : "NO",
+            "SEN1_WEe": 100,
+            "SEN1_AEe": 100,
+            "SEN1_A0" : 100,
+            "SEN1_W0" : 100,
+            "SEN1_S"  : 100,
+            "SEN1_S2" : 0,
+            "SEN1_G"  : -0.73,
+
+            "SEN2_t" : "SO2",
+            "SEN2_WEe": 100,
+            "SEN2_AEe": 100,
+            "SEN2_A0" : 100,
+            "SEN2_W0" : 100,
+            "SEN2_S"  : 100,
+            "SEN2_S2" : 0,
+            "SEN2_G"  : 0.80,
+
+            "SEN3_t":   "CO",
+            "SEN3_WEe": 100,
+            "SEN3_AEe": 100,
+            "SEN3_A0" : 100,
+            "SEN3_W0" : 100,
+            "SEN3_S"  : 100,
+            "SEN3_S2" : 0,
+            "SEN3_G"  : 0.80,
+
+            "SEN4_t":   "VOC",
+            "SEN4_WEe": 100,
+            "SEN4_AEe": 100,
+            "SEN4_A0" : 100,
+            "SEN4_W0" : 100,
+            "SEN4_S"  : 100,
+            "SEN4_S2" : -50,
+            "SEN4_G"  : -0.73
+        },
+        "gps":{
+            "lat": 44.425353,
+            "long": 26.131498
+        } 
+        
+    }
+
+}
