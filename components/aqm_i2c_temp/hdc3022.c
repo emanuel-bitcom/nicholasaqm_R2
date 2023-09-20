@@ -24,8 +24,8 @@ uint8_t cmd_buff[2];
 uint8_t receive_buff[10];
 
 hdc3022_err_t hdc3022_configure_autonomous(){
-    cmd_buff[0]=MEAS_AUT_H;
-    cmd_buff[1]=MEAS_AUT_L;
+    cmd_buff[0]=RES_H;
+    cmd_buff[1]=RES_L;
     esp_err_t ret_err = send_i2c_data(HDC3022_I2C_ADDR, cmd_buff, CMD_LEN);
     if(ret_err!=ESP_OK){
         ESP_LOGE(TAG, "NO DEVICE FOUND");

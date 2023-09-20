@@ -23,6 +23,9 @@ Application Specific includes
 
 static const char *TAG = "Main";
 
+/*DEBUG DEFINES*/
+#define TEST_NO_WIFI_INTERFACE 0
+
 void app_main(void)
 {
   init_global_mutexes();
@@ -44,12 +47,18 @@ void app_main(void)
   load_config_data_to_nvs();
 
   init_interval_control();
+
+  /*possibility to run without a wifi config interface                                                                                                                                                                                                                                                         */
+  #if TEST_NO_WIFI_INTERFACE
+  xEventGroupSetBits(sensors_evt_grp, wifi_interface_done);
+  #else
   init_wifi_interface();
 
   xEventGroupWaitBits(sensors_evt_grp, wifi_interface_done, false, true, portMAX_DELAY);
   deinit_wifi_interface();
   vTaskDelay(500);
   store_config_data_to_SD();
+  #endif
 
   if (!I2C_INIT_OK)
     init_i2c_driver();
@@ -76,6 +85,10 @@ void app_main(void)
   {
     // wait for sensors data to be ready
     xEventGroupWaitBits(sensors_evt_grp, opc_flag | toxic_flag | temp_flag, true, true, portMAX_DELAY);
+
+    /*after sensors measurements, close heating ptc*/
+    pm_heater_off();
+
     ESP_LOGI(TAG, "Received sensors readings, now transmitting");
 
     /*Test if there is a potential LTE connection*/

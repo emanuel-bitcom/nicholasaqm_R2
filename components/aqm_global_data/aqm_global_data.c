@@ -20,15 +20,17 @@ SemaphoreHandle_t i2c_bus_m;
 EventGroupHandle_t sensors_evt_grp;
 EventGroupHandle_t data_sent_evt_grp;
 EventGroupHandle_t comm_available_evt_grp;
+EventGroupHandle_t heat_ctrl_evt_grp;
 
 void init_global_mutexes(){
     //create mutexes
     i2c_bus_m=xSemaphoreCreateMutex();
     sensors_data_m=xSemaphoreCreateMutex();
-
+  
     sensors_evt_grp=xEventGroupCreate();
     data_sent_evt_grp=xEventGroupCreate();
     comm_available_evt_grp=xEventGroupCreate();
+    heat_ctrl_evt_grp=xEventGroupCreate();
 
 }
 

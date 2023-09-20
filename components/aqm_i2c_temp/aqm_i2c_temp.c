@@ -59,6 +59,16 @@ int start_temp_svc()
         &temp_task_handle,
         1);
 
+    xTaskCreatePinnedToCore(
+        pm_humid_ctrl_fun,
+        "humidity control function",
+        2000,
+        NULL,
+        3,
+        &humid_ctrl_handle,
+        1
+    );
+
     TEMP_SERVICE_ACTIVE = 1;
 
     /**

@@ -36,6 +36,8 @@ extern const int toxic_flag;
 extern const int temp_flag;
 extern const int opc_flag;
 extern const int wifi_interface_done;
+extern const int heat_ctrl_flag;
+extern const int heat_interval_flag;
 
 /*Global timing flag*/
 extern const int interval_flag;
@@ -63,6 +65,7 @@ extern SemaphoreHandle_t i2c_bus_m;
 extern EventGroupHandle_t sensors_evt_grp;
 extern EventGroupHandle_t data_sent_evt_grp;
 extern EventGroupHandle_t comm_available_evt_grp;
+extern EventGroupHandle_t heat_ctrl_evt_grp;
 
 /**
  * SPI Bus pins

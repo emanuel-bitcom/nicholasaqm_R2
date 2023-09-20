@@ -44,6 +44,12 @@ static void interval_fun(void *params){
     }
 
     while(true){
+        ESP_LOGI(TAG, "Starting heater if necessary");
+        xEventGroupSetBits(heat_ctrl_evt_grp, heat_ctrl_flag);
+
+        ESP_LOGI(TAG, "Waiting for preheating if neccessary (timeout: 4 mins)");
+        xEventGroupWaitBits(heat_ctrl_evt_grp, heat_interval_flag, true, true, pdMS_TO_TICKS(4*60*1000));
+
         ESP_LOGI(TAG, "Starting Sensors readings");
         xEventGroupSetBits(data_sent_evt_grp, 0xff);
         vTaskDelay(measurements_interval/portTICK_PERIOD_MS);
