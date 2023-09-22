@@ -68,9 +68,12 @@ esp_err_t send_receive_i2c_data(uint8_t _dev_addr, uint8_t *_tx_buf, uint8_t _tx
         ;
     i2c_master_start(cmd_handle);
     i2c_master_write_byte(cmd_handle, (_dev_addr << 1) | I2C_MASTER_READ, true);
-    for (uint8_t index = 0; (_rx_buf_len--) > 0; i2c_master_read_byte(cmd_handle, &_rx_buf[index++], true))
-        ;
-    //i2c_master_read(cmd_handle, _rx_buf, _rx_buf_len, I2C_MASTER_ACK);
+    uint8_t index = 0;
+    for (index = 0; (_rx_buf_len--) > 1; i2c_master_read_byte(cmd_handle, &_rx_buf[index++], I2C_MASTER_ACK));
+         ;
+    i2c_master_read_byte(cmd_handle, &_rx_buf[index++], I2C_MASTER_NACK);
+
+
     i2c_master_stop(cmd_handle);
 
     //launch the created command

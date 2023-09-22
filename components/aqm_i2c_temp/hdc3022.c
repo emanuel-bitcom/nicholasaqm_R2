@@ -56,8 +56,6 @@ hdc3022_err_t hdc3022_get_temp_humid(double *temperature, double *humidity){
     memset(receive_buff,0,10);
 
     esp_err_t ret_err = send_receive_i2c_data(HDC3022_I2C_ADDR, cmd_buff, CMD_LEN, receive_buff, T_H_REC_LEN);
-    //esp_err_t ret_err=send_i2c_data(HDC3022_I2C_ADDR, cmd_buff, 2);
-    //ret_err=receive_i2c_data(HDC3022_I2C_ADDR, receive_buff, 6);
 
      if(ret_err!=ESP_OK){
         ESP_LOGE(TAG, "NO DEVICE FOUND");

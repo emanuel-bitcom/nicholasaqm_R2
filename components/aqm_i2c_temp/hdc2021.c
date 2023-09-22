@@ -32,10 +32,8 @@ hdc2021_err_t hdc2021_get_temp_humid(hdc2021_t *hdc_dev_struct, double *temperat
 {
     uint8_t reg_address=HDC2021_TEMP_L_ADDR;
     //set data to access first register
-    hdc2021_set_data(hdc_dev_struct, &reg_address, 1);
-    hdc2021_send_data(hdc_dev_struct);
     //receive measured data
-    hdc2021_err_t my_error=hdc2021_recv_data(hdc_dev_struct, 4);
+     esp_err_t my_error = send_receive_i2c_data(hdc_dev_struct->dev_addr, &reg_address, 1, hdc_dev_struct->rw_buff, 4);
 
     /**
      * process data
@@ -45,7 +43,7 @@ hdc2021_err_t hdc2021_get_temp_humid(hdc2021_t *hdc_dev_struct, double *temperat
     uint16_t HUMIDITY=(hdc_dev_struct->rw_buff[2]) | ((hdc_dev_struct->rw_buff[3])<<8);
     *humidity=HUMIDITY*100.0/65536;
 
-    return my_error;
+    return (hdc2021_err_t)my_error;
 }
 
 
