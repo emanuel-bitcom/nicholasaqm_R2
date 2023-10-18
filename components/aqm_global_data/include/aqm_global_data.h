@@ -216,6 +216,6 @@ void init_global_mutexes();
 /*Global macros functions*/
 #define WAIT_I2C() {wait_for_mutex(&i2c_bus_m, 200);}
 #define RELEASE_I2C() {release_mutex(&i2c_bus_m);}
-#define DELAY_MS(T)  (vTaskDelay(pdMS_TO_TICKS(T)))
+#define DELAY_MS(T)  (vTaskDelay(T))
 
 #endif
