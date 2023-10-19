@@ -4,6 +4,8 @@ static const char *TAG = "ETH_DRIVER";
 const int eth_flag = BIT0;
 
 /*Private variables*/
+    static const uint8_t eth_mac[] = {0x02, 0x00, 0x00, 0x12, 0x34, 0x21};
+
 static esp_mqtt_client_handle_t client;
 //***********************************************************************
 // mqtt config struct
@@ -192,12 +194,17 @@ void aqm_mqtt_eth_publish_data()
     if ((uxReturn & eth_flag) == 0)
         return;
 
-    char *data_to_send;
+    char *data_to_send=NULL;
     int msg_id;
 
     build_body_as_JSON(&data_to_send);
     msg_id = esp_mqtt_client_publish(client, "aqm_station/nicholas_aqm", (const char *)data_to_send, (int)strlen((const char *)data_to_send), 0, 0);
     ESP_LOGI(TAG, "sent publish successful, msg_id=%d", msg_id);
+
+    /*Free cJSON string memory*/
+    if(data_to_send!=NULL){
+        free(data_to_send);
+    }
 
     /*generate next measurings -- no needed in production*/
     // xEventGroupSetBits(data_sent_evt_grp, 0xff);
@@ -284,8 +291,7 @@ void init_ETH()
     /* ENC28J60 doesn't burn any factory MAC address, we need to set it manually.
        02:00:00 is a Locally Administered OUI range so should not be used except when testing on a LAN under your control.
     */
-    mac->set_addr(mac, (uint8_t[]){
-                           0x02, 0x00, 0x00, 0x12, 0x34, 0x46});
+    mac->set_addr(mac, eth_mac);
 
     // ENC28J60 Errata #1 check
     if (emac_enc28j60_get_chip_info(mac) < ENC28J60_REV_B5 && 8 < 8)

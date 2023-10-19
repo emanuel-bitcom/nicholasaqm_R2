@@ -4,6 +4,7 @@
 #include <driver/i2c.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
+#include "esp_heap_caps.h"
 
 /*
 Application Specific includes
@@ -88,6 +89,22 @@ void app_main(void)
 
     /*after sensors measurements, close heating ptc*/
     pm_heater_off();
+
+    /* For debug purposes, print available heap memory */
+    ESP_LOGW(TAG, "************************Memory*DEBUG************************************");
+    ESP_LOGI(TAG, "xPortGetFreeHeapSize %ld = DRAM", (long int)xPortGetFreeHeapSize());
+
+    int DRam = heap_caps_get_free_size(MALLOC_CAP_8BIT);
+    int IRam = heap_caps_get_free_size(MALLOC_CAP_32BIT) - heap_caps_get_free_size(MALLOC_CAP_8BIT);
+
+    ESP_LOGI(TAG, "DRAM \t\t %d", DRam);
+    ESP_LOGI(TAG, "IRam \t\t %d", IRam);
+    int free = heap_caps_get_largest_free_block(MALLOC_CAP_8BIT);
+    ESP_LOGI(TAG, "free = %d", free);
+
+    int stackmem = uxTaskGetStackHighWaterMark(NULL);
+    ESP_LOGI(TAG, "stack space = %d", stackmem);
+    ESP_LOGW(TAG, "*************************************************************************");
 
     ESP_LOGI(TAG, "Received sensors readings, now transmitting");
 

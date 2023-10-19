@@ -11,7 +11,9 @@
     "aqm_i2c_temp.h": "c",
     "freertos.h": "c",
     "i2c_common.h": "c",
-    "stdio.h": "c"
+    "stdio.h": "c",
+    "*.tcc": "c",
+    "memory_resource": "c"
   },
   "idf.adapterTargetName": "esp32"
 }
