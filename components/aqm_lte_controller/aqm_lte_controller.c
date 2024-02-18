@@ -555,7 +555,6 @@ void build_body_as_JSON(char **result_json)
 {
 
   temp_data retrieved_temp;
-  toxic_data retrieved_toxic;
   opc_data retrieved_opc;
   station_cal retrieved_sta_cal;
   size_t retrieved_len;
@@ -586,11 +585,9 @@ void build_body_as_JSON(char **result_json)
       }
 
       size_t retrieved_len_1 = sizeof(temp_data);
-      size_t retrieved_len_2 = sizeof(toxic_data);
       size_t retrieved_len_3 = sizeof(opc_data);
 
       ESP_ERROR_CHECK(nvs_get_blob(aqm_handle, "aqm_temperature", (void *)&retrieved_temp, &retrieved_len_1));
-      ESP_ERROR_CHECK(nvs_get_blob(aqm_handle, "aqm_toxic", (void *)&retrieved_toxic, &retrieved_len_2));
       ESP_ERROR_CHECK(nvs_get_blob(aqm_handle, "aqm_opc", (void *)&retrieved_opc, &retrieved_len_3));
 
       data_retrieved = true;
@@ -676,70 +673,11 @@ void build_body_as_JSON(char **result_json)
   cJSON_AddNumberToObject(pm_json, "pmC", retrieved_opc.pmC);
   cJSON_AddItemToObject(json_data, "pm", pm_json);
 
-  cJSON *tox_mV_data = cJSON_CreateObject();
-  cJSON_AddNumberToObject(tox_mV_data, "SEN1_W", retrieved_toxic.SEN1_W);
-  cJSON_AddNumberToObject(tox_mV_data, "SEN2_W", retrieved_toxic.SEN2_W);
-  cJSON_AddNumberToObject(tox_mV_data, "SEN3_W", retrieved_toxic.SEN3_W);
-  cJSON_AddNumberToObject(tox_mV_data, "SEN4_W", retrieved_toxic.SEN4_W);
-  cJSON_AddNumberToObject(tox_mV_data, "SEN1_A", retrieved_toxic.SEN1_A);
-  cJSON_AddNumberToObject(tox_mV_data, "SEN2_A", retrieved_toxic.SEN2_A);
-  cJSON_AddNumberToObject(tox_mV_data, "SEN3_A", retrieved_toxic.SEN3_A);
-  cJSON_AddNumberToObject(tox_mV_data, "SEN4_A", retrieved_toxic.SEN4_A);
-  cJSON_AddItemToObject(json_data, "tox_mV", tox_mV_data);
-
   // create calibration json element
   cJSON *calib_json = cJSON_CreateObject();
 
-  cJSON *tox_mV_calib = cJSON_CreateObject();
-
   char sub_key[15];
-  for(uint8_t i=1;i<=4;i++){
-    /*sensor type*/
-    memset(sub_key,0,15);
-    sprintf(sub_key,"SEN%d_t",i);
-    cJSON_AddStringToObject(tox_mV_calib, (const char*)sub_key,retrieved_sta_cal.SEN_cal[i].type);
-
-    /*sensor WEe*/
-    memset(sub_key,0,15);
-    sprintf(sub_key,"SEN%d_WEe",i);
-    cJSON_AddNumberToObject(tox_mV_calib, (const char*)sub_key, retrieved_sta_cal.SEN_cal[i].WEe);
-    
-    /*sensor AEe*/
-    memset(sub_key,0,15);
-    sprintf(sub_key,"SEN%d_AEe",i);
-    cJSON_AddNumberToObject(tox_mV_calib, (const char*)sub_key, retrieved_sta_cal.SEN_cal[i].AEe);
-
-    /*sensor A0*/
-    memset(sub_key,0,15);
-    sprintf(sub_key,"SEN%d_A0",i);
-    cJSON_AddNumberToObject(tox_mV_calib, (const char*)sub_key, retrieved_sta_cal.SEN_cal[i].AE0);
-
-    /*sensor W0*/
-    memset(sub_key,0,15);
-    sprintf(sub_key,"SEN%d_W0",i);
-    cJSON_AddNumberToObject(tox_mV_calib, (const char*)sub_key, retrieved_sta_cal.SEN_cal[i].WE0);
-
-    /*sensor sensit 1*/
-    memset(sub_key,0,15);
-    sprintf(sub_key,"SEN%d_S",i);
-    cJSON_AddNumberToObject(tox_mV_calib, (const char*)sub_key, retrieved_sta_cal.SEN_cal[i].sensit);
-
-    /*sensor sensit2*/
-    /*aka NO2 sensit*/
-    memset(sub_key,0,15);
-    sprintf(sub_key,"SEN%d_S2",i);
-    cJSON_AddNumberToObject(tox_mV_calib, (const char*)sub_key, retrieved_sta_cal.SEN_cal[i].NO2_sensit);
-    
-    /*sensor gain*/
-    /*it is a double value*/
-    memset(sub_key,0,15);
-    sprintf(sub_key,"SEN%d_G",i);
-    cJSON_AddNumberToObject(tox_mV_calib, (const char*)sub_key, retrieved_sta_cal.SEN_cal[i].gain);
-
-  }
   
-  cJSON_AddItemToObject(calib_json, "tox_mV", tox_mV_calib);
-
   cJSON *gps_calib = cJSON_CreateObject();
   cJSON_AddNumberToObject(gps_calib, "lat", retrieved_sta_cal.pos_latitude);
   cJSON_AddNumberToObject(gps_calib, "long", retrieved_sta_cal.pos_longitude);

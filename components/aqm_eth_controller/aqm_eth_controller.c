@@ -4,7 +4,7 @@ static const char *TAG = "ETH_DRIVER";
 const int eth_flag = BIT0;
 
 /*Private variables*/
-    static const uint8_t eth_mac[] = {0x02, 0x00, 0x00, 0x12, 0x34, 0x21};
+    static const uint8_t eth_mac[] = {0x02, 0x00, 0x00, 0x12, 0x34, 0x17};
 
 static esp_mqtt_client_handle_t client;
 //***********************************************************************

@@ -13,7 +13,11 @@
     "i2c_common.h": "c",
     "stdio.h": "c",
     "*.tcc": "c",
-    "memory_resource": "c"
+    "memory_resource": "c",
+    "sensirion_i2c.h": "c",
+    "aqm_sps_ctrl.h": "c",
+    "aqm_nvs_high.h": "c",
+    "aqm_spi_controller.h": "c"
   },
   "idf.adapterTargetName": "esp32"
 }

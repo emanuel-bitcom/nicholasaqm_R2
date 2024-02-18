@@ -10,7 +10,9 @@
 Application Specific includes
 */
 #include <aqm_global_data.h>
+/*
 #include <aqm_i2c_toxic.h>
+*/
 #include <aqm_i2c_temp.h>
 #include <aqm_spi_controller.h>
 #include <i2c_common.h>
@@ -21,6 +23,7 @@ Application Specific includes
 #include <aqm_SD_controller.h>
 #include <aqm_interval.h>
 #include <aqm_SD_hw_reset.h>
+#include <aqm_sps_ctrl.h>
 
 static const char *TAG = "Main";
 
@@ -64,15 +67,16 @@ void app_main(void)
   if (!I2C_INIT_OK)
     init_i2c_driver();
 
-  if (start_toxic_svc())
-  {
-    ESP_LOGE(TAG, "Start Toxic Failed");
-  };
+  // if (start_toxic_svc())
+  // {
+  //   ESP_LOGE(TAG, "Start Toxic Failed");
+  // };
   if (start_temp_svc())
   {
     ESP_LOGE(TAG, "Start Temp Failed");
   };
-  aqm_spi_init();
+  aqm_spi_init_raw();
+  aqm_sps_init();
 
   #ifdef USE_ETH
     init_ETH();
@@ -85,7 +89,7 @@ void app_main(void)
   while (true)
   {
     // wait for sensors data to be ready
-    xEventGroupWaitBits(sensors_evt_grp, opc_flag | toxic_flag | temp_flag, true, true, portMAX_DELAY);
+    xEventGroupWaitBits(sensors_evt_grp, sps_flag | temp_flag, true, true, portMAX_DELAY);
 
     /*after sensors measurements, close heating ptc*/
     pm_heater_off();
