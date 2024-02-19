@@ -105,6 +105,16 @@ typedef struct opc_data_struct{
     float pmC;
 }opc_data;
 
+//****Function prototypes to write and get current data
+void write_toxic_data(toxic_data in_data);
+void get_current_toxic_data(toxic_data* out_data);
+
+void write_temp_data(temp_data in_data);
+void get_current_temp_data(temp_data* out_data);
+
+void write_opc_data(opc_data in_data);
+void get_current_opc_data(opc_data* out_data);
+
 //***********************************************************************
 
 //***********************************************************************

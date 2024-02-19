@@ -135,32 +135,11 @@ void toxic_fun(void *arg)
 
 	while(!data_written){
 
-		nvs_handle aqm_handle;
-
 		if(xSemaphoreTake(sensors_data_m,0)==pdTRUE){
-
-		ESP_ERROR_CHECK(nvs_flash_init_partition("temp_nvs"));
-
-		esp_err_t result = nvs_open_from_partition("temp_nvs", "store", NVS_READWRITE, &aqm_handle);
-
-		switch (result)
-		{
-		case ESP_OK:
-			ESP_LOGI(TAG_TOXIC, "successfully opened temp_nvs");
-			break;
-
-		default:
-			ESP_LOGE(TAG_TOXIC, "Error: %s", esp_err_to_name(result));
-			break;
-		}
-
-		ESP_ERROR_CHECK(nvs_set_blob(aqm_handle, "aqm_toxic", (void*)&current_toxic, sizeof(toxic_data)));
-
-		ESP_ERROR_CHECK(nvs_commit(aqm_handle));
 
 		data_written=true;
 
-		nvs_close(aqm_handle);
+    write_toxic_data(current_toxic);
 
     /**
      * Debug section

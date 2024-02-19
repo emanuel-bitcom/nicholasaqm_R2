@@ -43,3 +43,58 @@ void wait_for_mutex(SemaphoreHandle_t *mutex, uint wait_delay){
 void release_mutex(SemaphoreHandle_t *mutex){
   xSemaphoreGive(*mutex);
 }
+
+//****Functions to write and get current data
+toxic_data current_toxic_data={
+  .SEN1_A=0,
+  .SEN1_W=0,
+  .SEN2_A=0,
+  .SEN2_W=0,
+  .SEN3_W=0,
+  .SEN3_A=0,
+  .SEN4_A=0,
+  .SEN4_W=0
+};
+
+void write_toxic_data(toxic_data in_data){
+  current_toxic_data=in_data;
+}
+void get_current_toxic_data(toxic_data* out_data){
+ if(out_data){
+  *out_data=current_toxic_data;
+ }
+}
+
+temp_data current_temp_data={
+  .humid_env=0,
+  .humid_sta=0,
+  .temp_env=0,
+  .temp_sta=0
+};
+
+void write_temp_data(temp_data in_data){
+  current_temp_data=in_data;
+
+}
+void get_current_temp_data(temp_data* out_data){
+  if(out_data){
+    *out_data=current_temp_data;
+  }
+}
+
+opc_data current_opc_data={
+  .pmA = 0,
+  .pmB = 0,
+  .pmC = 0
+};
+
+void write_opc_data(opc_data in_data){
+  current_opc_data = in_data;
+}
+
+
+void get_current_opc_data(opc_data* out_data){
+  if(out_data){
+    *out_data=current_opc_data;
+  }
+}

@@ -154,27 +154,11 @@ void temp_fun(void *params)
         if (xSemaphoreTake(sensors_data_m, 0) == pdTRUE)
         {
 
-            ESP_ERROR_CHECK(nvs_flash_init_partition("temp_nvs"));
+            /*write current data*/
+            write_temp_data(current_temp);
 
-            esp_err_t result = nvs_open_from_partition("temp_nvs", "store", NVS_READWRITE, &aqm_handle);
-
-            switch (result)
-            {
-            case ESP_OK:
-                ESP_LOGI(TAG, "Successfully opened temp nvs to write temperature data");
-                break;
-
-            default:
-                ESP_LOGE(TAG, "Error: %s", esp_err_to_name(result));
-                break;
-            }
-
-            ESP_ERROR_CHECK(nvs_set_blob(aqm_handle, "aqm_temperature", (void *)&current_temp, sizeof(temp_data)));
-            ESP_ERROR_CHECK(nvs_commit(aqm_handle));
-
-            data_written = true;
-
-            nvs_close(aqm_handle);
+            /*make written flag true*/
+            data_written=true;
 
             xSemaphoreGive(sensors_data_m);
         }

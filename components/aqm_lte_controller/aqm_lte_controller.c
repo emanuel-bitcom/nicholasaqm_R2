@@ -564,35 +564,16 @@ void build_body_as_JSON(char **result_json)
   while (!data_retrieved)
   {
 
-    nvs_handle aqm_handle;
-
     if (xSemaphoreTake(sensors_data_m, 0) == pdTRUE)
     {
-
-      ESP_ERROR_CHECK(nvs_flash_init_partition("temp_nvs"));
-
-      esp_err_t result = nvs_open_from_partition("temp_nvs", "store", NVS_READWRITE, &aqm_handle);
-
-      switch (result)
-      {
-      case ESP_OK:
-
-        break;
-
-      default:
-        ESP_LOGE(TAG1, "Error: %s", esp_err_to_name(result));
-        break;
-      }
 
       size_t retrieved_len_1 = sizeof(temp_data);
       size_t retrieved_len_3 = sizeof(opc_data);
 
-      ESP_ERROR_CHECK(nvs_get_blob(aqm_handle, "aqm_temperature", (void *)&retrieved_temp, &retrieved_len_1));
-      ESP_ERROR_CHECK(nvs_get_blob(aqm_handle, "aqm_opc", (void *)&retrieved_opc, &retrieved_len_3));
+      get_current_temp_data(&retrieved_temp);
+      get_current_opc_data(&retrieved_opc);
 
       data_retrieved = true;
-
-      nvs_close(aqm_handle);
 
       xSemaphoreGive(sensors_data_m);
     }
@@ -604,7 +585,7 @@ void build_body_as_JSON(char **result_json)
     }
   }
 
-  // now get the configuration data
+  // get the configuration data
   data_retrieved = false;
 
   while (!data_retrieved)
