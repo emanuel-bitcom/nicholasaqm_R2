@@ -1,0 +1,1 @@
+idf_component_register(SRCS "aqm_spi_controller.c" INCLUDE_DIRS include REQUIRES "nvs_flash" "aqm_global_data" "driver" "aqm_nvs_rw")
